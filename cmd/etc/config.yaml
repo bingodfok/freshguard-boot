@@ -1,0 +1,6 @@
+mysql:
+  host: 192.168.0.122
+  port: 3306
+  username: root
+  password: cfy39177
+  database: freshguard

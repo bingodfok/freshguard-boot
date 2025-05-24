@@ -3,7 +3,7 @@ package test
 import (
 	"encoding/json"
 	"fmt"
-	"freshguard-boot/pkg/auth"
+	"github.com/bingodfok/freshguard-boot/pkg/auth"
 	"testing"
 )
 
