@@ -1,4 +1,4 @@
-module freshguard-boot
+module github.com/bingodfok/freshguard-boot
 
 go 1.24
 
