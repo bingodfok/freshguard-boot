@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cache"
-	"github.com/gofiber/fiber/v2/middleware/cors"
 	"strconv"
 )
 
@@ -26,16 +24,20 @@ func (server *FiberServer) InitFiberServer() {
 		CaseSensitive:     true, // 区分请求地址大小写
 		EnablePrintRoutes: true,
 	})
+	if server.ContextPath == "" {
+		server.ContextPath = "/"
+	}
 }
 
 // Route 添加fiber路由
-func (server *FiberServer) Route(router func(fiber.Router)) {
-	server.app.Route(server.ContextPath, router)
+func (server *FiberServer) Route(fun func(router fiber.Router)) {
+	server.app.Route(server.ContextPath, fun)
 }
 
-func (server *FiberServer) UseMiddleware() {
-	cache.New(cache.Config{})
-	server.app.Use(cors.New(cors.Config{}))
+func (server *FiberServer) UseMiddleware(handlers ...fiber.Handler) {
+	for _, handler := range handlers {
+		server.app.Use(handler)
+	}
 }
 
 // Run 运行fiber服务器

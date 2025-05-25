@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-var db = mysql.DB
+var db = main.App
 
 type User struct {
 	UserId   string `xorm:"unique"`
@@ -14,7 +14,7 @@ type User struct {
 	Phone    string
 	Gender   string
 	Avatar   string
-	BaseEntity
+	mysql.BaseEntity
 }
 
 func (u *User) TableName() string {

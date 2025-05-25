@@ -3,10 +3,13 @@ module github.com/bingodfok/freshguard-boot
 go 1.24
 
 require (
+	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/go-sql-driver/mysql v1.9.2
 	github.com/gofiber/fiber/v2 v2.52.8
 	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/spf13/viper v1.20.1
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1128
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms v1.0.1115
 	xorm.io/xorm v1.3.9
 )
 

@@ -1,6 +1,8 @@
 package main
 
+var App Application
+
 func main() {
-	application := NewApplication()
-	application.Run()
+	App := NewApplication()
+	App.Run()
 }

@@ -5,6 +5,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+var v *viper.Viper
+
 func LoadConfigViper(config string) (*viper.Viper, error) {
 	if len(config) == 0 {
 		return nil, fmt.Errorf("no config file provided")
@@ -15,5 +17,6 @@ func LoadConfigViper(config string) (*viper.Viper, error) {
 	if err := viper.ReadInConfig(); err != nil {
 		return nil, err
 	}
-	return viper.GetViper(), nil
+	v = viper.GetViper()
+	return v, nil
 }

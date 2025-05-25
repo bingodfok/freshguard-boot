@@ -4,3 +4,13 @@ mysql:
   username: root
   password: cfy39177
   database: freshguard
+redis:
+  host: 1Panel-redis-PDvy
+  port: 6379
+  password: 6rw332GfSPWW8nBF
+  database: 0
+jwt:
+  secret: sj12%hj3sd&jo5pak34h$df7sh#jsd
+web:
+  port: 8080
+  context-path: /api
