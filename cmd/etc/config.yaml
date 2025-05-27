@@ -11,8 +11,6 @@ redis:
   database: 0
 sms:
   tencent:
-    secret-id: AKID1wjLk7MYcWEiy2yhD1d2DAvSlqpkVM7r
-    secret-key:  Qo073mIbkgZGk170qVyUvAC5nYFqJcjf
     sign-name: 青白江游同学工作室
     sdk-app-id: 1400948323
     template-id: 2310769
