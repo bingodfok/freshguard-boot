@@ -1,8 +1,8 @@
 package main
 
-var App Application
+import "github.com/bingodfok/freshguard-boot/cmd/application"
 
 func main() {
-	App := NewApplication()
-	App.Run()
+	appCtx := application.NewApplication()
+	application.Run(appCtx)
 }
