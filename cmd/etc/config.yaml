@@ -9,13 +9,7 @@ redis:
   port: 6379
   password: 6rw332GfSPWW8nBF
   database: 0
-sms:
-  tencent:
-    sign-name: 青白江游同学工作室
-    sdk-app-id: 1400948323
-    template-id: 2310769
-jwt:
-  secret: sj12%hj3sd&jo5pak34h$df7sh#jsd
+
 web:
   port: 8080
   context-path: /api
