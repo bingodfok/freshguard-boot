@@ -15,12 +15,12 @@ func SendSmsCodeLogic(phone string, ctx *ctx.AppContext) (string, error) {
 	}
 	codeKey := uuid.New().String()
 	ctx.Redis.Set("auth:sms_code:"+phone, map[string]string{
-		"code_key": codeKey,
-		"code":     code,
+		"codeKey": codeKey,
+		"code":    code,
 	}, time.Minute*5)
 	err = ctx.SmsClient.TencentSmsCodeSend(code, 5, phone)
 	if err != nil {
 		return "", err
 	}
-	return code, nil
+	return codeKey, nil
 }

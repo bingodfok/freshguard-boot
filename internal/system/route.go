@@ -13,6 +13,7 @@ var (
 func Route(ctx *ctx.AppContext) func(router fiber.Router) {
 	return func(router fiber.Router) {
 		router.Get("/profile", getProfileHandler)
-		router.Get("/sms_code", handler.SmsCodeHandler(ctx))
+		router.Get("/resource/sms_captcha", handler.SmsCodeHandler(ctx))
+		router.Post("/login/sms_captcha", handler.PhoneCaptchaLoginHandler(ctx))
 	}
 }

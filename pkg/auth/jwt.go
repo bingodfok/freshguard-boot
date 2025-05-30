@@ -6,6 +6,7 @@ import (
 )
 
 type StandardClaims struct {
+	Id       int64  `json:"id"`
 	UserId   string `json:"user_id"`
 	UserName string `json:"user_name"`
 	Avatar   string `json:"avatar"`

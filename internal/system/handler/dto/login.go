@@ -8,8 +8,9 @@ type PwdLoginReq struct {
 }
 
 type PhoneLoginReq struct {
-	Phone   string `json:"phone"`
-	Captcha string `json:"captcha"`
+	Phone      string `json:"phone"`
+	Captcha    string `json:"captcha"`
+	CaptchaKey string `json:"captchaKey"`
 }
 
 type LoginRep struct {

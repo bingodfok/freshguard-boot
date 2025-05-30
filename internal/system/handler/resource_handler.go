@@ -22,7 +22,7 @@ func SmsCodeHandler(ctx *ctx.AppContext) func(f *fiber.Ctx) error {
 			return err
 		}
 		return f.JSON(resp.Success(map[string]string{
-			"code_key": codeKey,
+			"codeKey": codeKey,
 		}))
 	}
 }

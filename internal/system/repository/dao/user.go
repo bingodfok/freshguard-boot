@@ -3,9 +3,8 @@ package dao
 import (
 	"github.com/bingodfok/freshguard-boot/pkg/suport/mysql"
 	"log"
+	"xorm.io/xorm"
 )
-
-var db = main.App
 
 type User struct {
 	UserId   string `xorm:"unique"`
@@ -21,39 +20,59 @@ func (u *User) TableName() string {
 	return "user"
 }
 
-func Insert(user *User) bool {
-	insert, err := db.Insert(user)
+func Insert(xorm *xorm.Engine, user *User) (bool, error) {
+	insert, err := xorm.Insert(user)
 	if err != nil {
 		log.Println(err)
-		return false
+		return false, err
 	}
-	return insert > 0
+	return insert > 0, nil
 }
 
-func UpdateById(user *User) bool {
-	update, err := db.ID(user.Id).Update(user)
+func UpdateById(xorm *xorm.Engine, user *User) (bool, error) {
+	update, err := xorm.ID(user.Id).Update(user)
 	if err != nil {
 		log.Println(err)
-		return false
+		return false, err
 	}
-	return update > 0
+	return update > 0, nil
 }
 
-func DeleteById(id int64) bool {
-	deleted, err := db.ID(id).Delete()
+func DeleteById(xorm *xorm.Engine, id int64) (bool, error) {
+	deleted, err := xorm.ID(id).Delete()
 	if err != nil {
 		log.Println(err)
-		return false
+		return false, err
 	}
-	return deleted > 0
+	return deleted > 0, nil
 }
 
-func SelectById(id int64) *User {
+func SelectById(xorm *xorm.Engine, id int64) (*User, error) {
 	user := &User{}
-	err := db.ID(id).Find(user)
+	err := xorm.ID(id).Find(user)
 	if err != nil {
 		log.Println(err)
-		return nil
+		return nil, err
 	}
-	return user
+	return user, nil
+}
+
+func SelectByUserId(xorm *xorm.Engine, userId string) (*User, error) {
+	user := &User{}
+	err := xorm.Where("user_id = ?", userId).Find(user)
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+	return user, nil
+}
+
+func SelectByPhone(xorm *xorm.Engine, phone string) (*User, error) {
+	user := &User{}
+	err := xorm.Where("phone = ?", phone).Find(user)
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+	return user, err
 }

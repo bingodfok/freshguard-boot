@@ -7,6 +7,8 @@ var (
 	UnauthorizedCode = NewResultCode(401, "Unauthorized")
 	ServerErrorCode  = NewResultCode(500, "Server Error")
 	// 特殊响应状态码
+	CaptchaErrorCode = NewResultCode(1001, "验证码错误")
+	CaptchaExpCode   = NewResultCode(1002, "验证码过期")
 )
 
 type ResultCode struct {

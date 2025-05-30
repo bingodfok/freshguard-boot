@@ -19,6 +19,7 @@ sms:
 
 jwt:
   secret: sj12%hj3sd&jo5pak34h$df7sh#jsd
+  exp: 86400
 web:
   port: 8080
   context-path: /api
