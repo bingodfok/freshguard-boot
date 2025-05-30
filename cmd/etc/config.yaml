@@ -1,5 +1,5 @@
 mysql:
-  host:
+  host: 1Panel-mysql-RHnT
   port: 3306
   username: freshguard
   password: shlite-01@panel_ps
