@@ -46,7 +46,7 @@ func Run(ctx *ctx.AppContext) {
 	}
 	ctx.Redis = c.InitRedisClient()
 	// 初始化腾讯云短信发送客户端
-	tencentSMS := sms.TencentSMS{
+	tencentSMS := &sms.TencentSMS{
 		SecretId:   ctx.Viper.GetString("sms.tencent.secret-id"),
 		SecretKey:  ctx.Viper.GetString("sms.tencent.secret-key"),
 		SdkAppId:   ctx.Viper.GetString("sms.tencent.sdk-app-id"),
