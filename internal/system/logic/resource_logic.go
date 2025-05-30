@@ -1,9 +1,11 @@
 package logic
 
 import (
+	"fmt"
 	"github.com/bingodfok/freshguard-boot/cmd/ctx"
 	"github.com/bingodfok/freshguard-boot/pkg/utils"
 	"github.com/google/uuid"
+	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/json"
 	"time"
 )
 
@@ -14,10 +16,15 @@ func SendSmsCodeLogic(phone string, ctx *ctx.AppContext) (string, error) {
 		return "", err
 	}
 	codeKey := uuid.New().String()
-	ctx.Redis.Set("auth:sms_code:"+phone, map[string]string{
+	bytes, err := json.Marshal(map[string]string{
 		"codeKey": codeKey,
 		"code":    code,
-	}, time.Minute*5)
+	})
+	if err != nil {
+		return "", err
+	}
+	val := ctx.Redis.Set("auth:sms_code:"+phone, string(bytes), time.Minute*5).Val()
+	fmt.Println("val:", val)
 	err = ctx.SmsClient.TencentSmsCodeSend(code, 5, phone)
 	if err != nil {
 		return "", err

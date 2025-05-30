@@ -18,15 +18,14 @@ func PwdLoginLogic(name string, password string) (*dto.LoginRep, error) {
 }
 
 func PhoneCaptchaLoginLogic(ctx *ctx.AppContext, codeKey string, code string, phone string) (*dto.LoginRep, error) {
-	bytes, err := ctx.Redis.Get("auth:sms_code:" + phone).Bytes()
-	if err != nil {
-		return nil, err
-	}
-	if bytes == nil {
+	val := ctx.Redis.Get("auth:sms_code:" + phone).Val()
+	fmt.Println("val:", val)
+	if val == "" {
 		return nil, errors.NewBizErrorCode(resp.CaptchaExpCode)
 	}
-	codeResult := make(map[string]string)
-	err = json.Unmarshal(bytes, codeResult)
+	ctx.Redis.Del("auth:sms_code:" + phone)
+	codeResult := map[string]string{}
+	err := json.Unmarshal([]byte(val), &codeResult)
 	if err != nil {
 		return nil, err
 	}
@@ -36,6 +35,7 @@ func PhoneCaptchaLoginLogic(ctx *ctx.AppContext, codeKey string, code string, ph
 		if err != nil {
 			return nil, err
 		}
+		fmt.Println(user)
 		if user == nil {
 			// 新建用户并且生成token
 			user, err = GenUserByPhoneLogic(ctx, phone)
@@ -46,6 +46,7 @@ func PhoneCaptchaLoginLogic(ctx *ctx.AppContext, codeKey string, code string, ph
 		jwtAuth := auth.JwtAuth{
 			SigningKey: ctx.Viper.GetString("jwt.secret"),
 		}
+		exp := time.Now().Add(time.Second * ctx.Viper.GetDuration("jwt.exp"))
 		claims := auth.StandardClaims{
 			Id:       user.Id,
 			UserId:   user.UserId,
@@ -53,7 +54,7 @@ func PhoneCaptchaLoginLogic(ctx *ctx.AppContext, codeKey string, code string, ph
 			UserName: user.Name,
 			RegisteredClaims: jwt.RegisteredClaims{
 				NotBefore: jwt.NewNumericDate(time.Now()),
-				ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Second * ctx.Viper.GetDuration("jet.exp"))),
+				ExpiresAt: jwt.NewNumericDate(exp),
 				IssuedAt:  jwt.NewNumericDate(time.Now()),
 				Issuer:    ctx.Viper.GetString("jwt.issuer"),
 			},
@@ -68,6 +69,7 @@ func PhoneCaptchaLoginLogic(ctx *ctx.AppContext, codeKey string, code string, ph
 			Username: user.Name,
 			UserType: common.Formal,
 			Avatar:   user.Avatar,
+			Expires:  exp.UnixMilli(),
 		}, nil
 	} else {
 		return nil, errors.NewBizErrorCode(resp.CaptchaErrorCode)

@@ -1,6 +1,8 @@
 package dto
 
-import "github.com/bingodfok/freshguard-boot/internal/system/common"
+import (
+	"github.com/bingodfok/freshguard-boot/internal/system/common"
+)
 
 type PwdLoginReq struct {
 	Username string `json:"username"`
@@ -10,13 +12,14 @@ type PwdLoginReq struct {
 type PhoneLoginReq struct {
 	Phone      string `json:"phone"`
 	Captcha    string `json:"captcha"`
-	CaptchaKey string `json:"captchaKey"`
+	CaptchaKey string `json:"key"`
 }
 
 type LoginRep struct {
-	UserId   string           `json:"user_id"`
-	Token    string           `json:"access_token"`
+	UserId   string           `json:"userId"`
+	Token    string           `json:"accessToken"`
 	Username string           `json:"username"`
 	Avatar   string           `json:"avatar"`
-	UserType common.UserScope `json:"user_type"`
+	UserType common.UserScope `json:"userType"`
+	Expires  int64            `json:"expires"`
 }

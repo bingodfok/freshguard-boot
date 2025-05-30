@@ -65,7 +65,7 @@ func Run(ctx *ctx.AppContext) {
 	ctx.HttpServer = fiberServer
 	fiberServer.InitFiberServer()
 	compress.New()
-	fiberServer.UseMiddleware(cors.New(), auth.JwtAuthMiddleware([]string{"/api/sys/sms_code"}, func() string {
+	fiberServer.UseMiddleware(cors.New(), auth.JwtAuthMiddleware([]string{"/api/sys/resource/sms_captcha", "/api/sys/login/sms_captcha"}, func() string {
 		return ctx.Viper.GetString("jwt.secret")
 	}))
 	fiberServer.Route(http_server.BuildRoute(ctx))
