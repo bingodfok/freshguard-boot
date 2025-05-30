@@ -54,6 +54,7 @@ func Run(ctx *ctx.AppContext) {
 		TemplateId: ctx.Viper.GetString("sms.tencent.template-id"),
 	}
 	tencentSMS.InitTencentSms()
+	ctx.SmsClient = tencentSMS
 	// 启动fiber服务器
 	fiberServer := webserver.FiberServer{
 		AppName:           "FreshGuard",
