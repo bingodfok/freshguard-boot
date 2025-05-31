@@ -15,6 +15,10 @@ type HomeMember struct {
 	DeleteAt time.Time `xorm:"deleted"`
 }
 
+func (hm *HomeMember) TableName() string {
+	return "home_member"
+}
+
 func (hm *HomeMember) Insert(xorm *xorm.Engine) error {
 	_, err := xorm.Insert(hm)
 	if err != nil {

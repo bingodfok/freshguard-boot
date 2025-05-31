@@ -12,6 +12,6 @@ func BuildRoute(ctx *ctx.AppContext) func(router fiber.Router) {
 	return func(router fiber.Router) {
 		router.Route("/msg", msg.Route(ctx))
 		router.Route("/sys", system.Route(ctx))
-		router.Route("/fridge", fridge.Route())
+		router.Route("/fridge", fridge.Route(ctx))
 	}
 }

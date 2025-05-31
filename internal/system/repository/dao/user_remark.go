@@ -15,7 +15,7 @@ type UserRemark struct {
 	DeleteAt time.Time `xorm:"deleted"`
 }
 
-func (UserRemark) TableName() string {
+func (userRemark *UserRemark) TableName() string {
 	return "user_remark"
 }
 

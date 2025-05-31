@@ -10,6 +10,8 @@ var (
 	CaptchaErrorCode = NewResultCode(1001, "验证码错误")
 	CaptchaExpCode   = NewResultCode(1002, "验证码过期")
 	UserNotExistCode = NewResultCode(1003, "用户不存在")
+
+	FridgeExistCode = NewResultCode(2001, "冰箱已经存在")
 )
 
 type ResultCode struct {
