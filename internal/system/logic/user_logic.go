@@ -26,6 +26,11 @@ func GenUserByPhoneLogic(ctx *ctx.AppContext, phone string) (*dao.User, error) {
 	if err != nil {
 		return nil, err
 	}
+	// 新建该用户的家庭，并将用户添加到该家庭
+	_, err = GenHomeByUserLogic(ctx, user)
+	if err != nil {
+		return nil, err
+	}
 	return user, nil
 }
 

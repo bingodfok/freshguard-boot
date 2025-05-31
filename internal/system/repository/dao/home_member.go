@@ -2,6 +2,7 @@ package dao
 
 import (
 	"time"
+	"xorm.io/xorm"
 )
 
 type HomeMember struct {
@@ -12,4 +13,12 @@ type HomeMember struct {
 	CreateAt time.Time `xorm:"created"`
 	UpdateAt time.Time `xorm:"updated"`
 	DeleteAt time.Time `xorm:"deleted"`
+}
+
+func (hm *HomeMember) Insert(xorm *xorm.Engine) error {
+	_, err := xorm.Insert(hm)
+	if err != nil {
+		return err
+	}
+	return nil
 }
