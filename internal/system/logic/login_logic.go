@@ -30,7 +30,8 @@ func PhoneCaptchaLoginLogic(ctx *ctx.AppContext, codeKey string, code string, ph
 		return nil, err
 	}
 	if codeResult["code"] == code && codeResult["codeKey"] == codeKey {
-		fmt.Println("验证码输入正确")
+		// 清除验证码缓存
+		ctx.Redis.Del("auth:sms_code:" + phone)
 		user, err := GetUserByPhoneLogic(ctx, phone)
 		if err != nil {
 			return nil, err

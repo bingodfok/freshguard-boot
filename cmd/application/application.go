@@ -9,7 +9,6 @@ import (
 	"github.com/bingodfok/freshguard-boot/pkg/suport/mysql"
 	"github.com/bingodfok/freshguard-boot/pkg/suport/sms"
 	"github.com/bingodfok/freshguard-boot/pkg/suport/webserver"
-	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/spf13/viper"
 	"sync"
@@ -64,7 +63,6 @@ func Run(ctx *ctx.AppContext) {
 	}
 	ctx.HttpServer = fiberServer
 	fiberServer.InitFiberServer()
-	compress.New()
 	fiberServer.UseMiddleware(cors.New(), auth.JwtAuthMiddleware([]string{"/api/sys/resource/sms_captcha", "/api/sys/login/sms_captcha"}, func() string {
 		return ctx.Viper.GetString("jwt.secret")
 	}))

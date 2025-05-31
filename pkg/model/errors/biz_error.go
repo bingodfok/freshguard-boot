@@ -3,8 +3,8 @@ package errors
 import "github.com/bingodfok/freshguard-boot/pkg/model/resp"
 
 type BizError struct {
-	code int
-	msg  string
+	Code int
+	Msg  string
 }
 
 func NewBizError(code int, msg string) *BizError {
@@ -13,11 +13,11 @@ func NewBizError(code int, msg string) *BizError {
 
 func NewBizErrorCode(code resp.ResultCode) *BizError {
 	return &BizError{
-		code: code.Code,
-		msg:  code.Message,
+		Code: code.Code,
+		Msg:  code.Message,
 	}
 }
 
 func (e *BizError) Error() string {
-	return e.msg
+	return e.Msg
 }

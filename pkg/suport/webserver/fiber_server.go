@@ -2,7 +2,10 @@ package webserver
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	bizErrors "github.com/bingodfok/freshguard-boot/pkg/model/errors"
+	"github.com/bingodfok/freshguard-boot/pkg/model/resp"
 	"github.com/gofiber/fiber/v2"
 	"strconv"
 )
@@ -23,6 +26,17 @@ func (server *FiberServer) InitFiberServer() {
 		ServerHeader:      "Fiber/v2",
 		CaseSensitive:     true, // 区分请求地址大小写
 		EnablePrintRoutes: true,
+		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
+			var biz *bizErrors.BizError
+			if errors.As(err, &biz) {
+				return ctx.JSON(resp.NewResultCode(biz.Code, biz.Msg))
+			}
+			var fiberError *fiber.Error
+			if errors.As(err, &fiberError) {
+				return ctx.Status(fiberError.Code).JSON(resp.NewResultCode(fiberError.Code, fiberError.Message))
+			}
+			return ctx.Status(fiber.StatusInternalServerError).JSON(resp.EmptyDataResult(resp.ServerErrorCode))
+		},
 	})
 	if server.ContextPath == "" {
 		server.ContextPath = "/"
