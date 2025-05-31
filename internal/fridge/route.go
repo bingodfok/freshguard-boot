@@ -11,6 +11,6 @@ func Route(ctx *ctx.AppContext) func(router fiber.Router) {
 		router.Post("/fridge/create_fridge", handler.CreateFridgeHandler(ctx))
 		router.Get("/fridge/list", handler.FridgeListHandler(ctx))
 		router.Post("/fridge/edit", handler.FridgeEditHandler(ctx))
-		router.Put("/category/list", handler.CategoryListHandler(ctx))
+		router.Get("/category/list", handler.CategoryListHandler(ctx))
 	}
 }
