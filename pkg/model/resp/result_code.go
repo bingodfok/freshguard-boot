@@ -11,7 +11,8 @@ var (
 	CaptchaExpCode   = NewResultCode(1002, "验证码过期")
 	UserNotExistCode = NewResultCode(1003, "用户不存在")
 
-	FridgeExistCode = NewResultCode(2001, "冰箱已经存在")
+	FridgeExistCode    = NewResultCode(2001, "冰箱已经存在")
+	FridgeNotExistCode = NewResultCode(2002, "冰箱不存在")
 )
 
 type ResultCode struct {

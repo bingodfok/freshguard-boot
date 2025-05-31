@@ -46,3 +46,23 @@ func FridgeListByHome(xorm *xorm.Engine, homeId int64) ([]*Fridge, error) {
 	}
 	return friends, nil
 }
+
+func SelectFridgeById(xorm *xorm.Engine, id int64) (*Fridge, error) {
+	friend := &Fridge{}
+	has, err := xorm.Where("id = ?", id).Get(friend)
+	if err != nil {
+		return nil, err
+	}
+	if !has {
+		return nil, nil
+	}
+	return friend, nil
+}
+
+func UpdateFridge(xorm *xorm.Engine, fridge *Fridge) error {
+	_, err := xorm.ID(fridge.Id).Update(fridge)
+	if err != nil {
+		return err
+	}
+	return nil
+}

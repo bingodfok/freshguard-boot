@@ -2,6 +2,7 @@ package logic
 
 import (
 	"github.com/bingodfok/freshguard-boot/cmd/ctx"
+	"github.com/bingodfok/freshguard-boot/internal/fridge/handler/dto"
 	"github.com/bingodfok/freshguard-boot/internal/fridge/repository/dao"
 	"github.com/bingodfok/freshguard-boot/internal/system/logic"
 	"github.com/bingodfok/freshguard-boot/pkg/model/errors"
@@ -42,4 +43,25 @@ func FridgeListLogic(ctx *ctx.AppContext, userId int64) ([]*dao.Fridge, error) {
 		return nil, err
 	}
 	return fridges, nil
+}
+
+func FridgeEditLogic(ctx *ctx.AppContext, edit *dto.EditFridgeReq, userId int64) error {
+	home, err := logic.GetHomeByUser(ctx, userId)
+	if err != nil {
+		return err
+	}
+	fridged, err := dao.SelectFridgeById(ctx.Xorm, edit.Id)
+	if err != nil {
+		return err
+	}
+	if fridged == nil {
+		return errors.NewBizErrorCode(resp.FridgeNotExistCode)
+	}
+	if fridged.CreateBy != userId && home.Belong != userId {
+		return errors.NewBizErrorCode(resp.NewResultCode(resp.UnauthorizedCode.Code, "没有编辑权限"))
+	}
+	if err := dao.UpdateFridge(ctx.Xorm, fridged); err != nil {
+		return err
+	}
+	return nil
 }
