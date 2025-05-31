@@ -29,11 +29,11 @@ func (server *FiberServer) InitFiberServer() {
 		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
 			var biz *bizErrors.BizError
 			if errors.As(err, &biz) {
-				return ctx.JSON(resp.NewResultCode(biz.Code, biz.Msg))
+				return ctx.JSON(resp.EmptyDataResult(resp.NewResultCode(biz.Code, biz.Msg)))
 			}
 			var fiberError *fiber.Error
 			if errors.As(err, &fiberError) {
-				return ctx.Status(fiberError.Code).JSON(resp.NewResultCode(fiberError.Code, fiberError.Message))
+				return ctx.Status(fiberError.Code).JSON(resp.EmptyDataResult(resp.NewResultCode(fiberError.Code, fiberError.Message)))
 			}
 			return ctx.Status(fiber.StatusInternalServerError).JSON(resp.EmptyDataResult(resp.ServerErrorCode))
 		},

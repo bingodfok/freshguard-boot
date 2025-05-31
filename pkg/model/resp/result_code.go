@@ -12,8 +12,8 @@ var (
 )
 
 type ResultCode struct {
-	Code    int
-	Message string
+	Code    int    `json:"code"`
+	Message string `json:"message"`
 }
 
 func NewResultCode(code int, message string) ResultCode {
