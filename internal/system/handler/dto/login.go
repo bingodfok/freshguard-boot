@@ -17,6 +17,7 @@ type PhoneLoginReq struct {
 
 type LoginRep struct {
 	UserId   string           `json:"userId"`
+	HomeId   int64            `json:"homeId"`
 	Token    string           `json:"accessToken"`
 	Username string           `json:"username"`
 	Avatar   string           `json:"avatar"`

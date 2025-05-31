@@ -26,3 +26,12 @@ func (h *Home) Insert(xorm *xorm.Engine) error {
 	}
 	return nil
 }
+
+func ListByHomeIds(xorm *xorm.Engine, hid []int64) ([]*Home, error) {
+	hms := make([]*Home, 0)
+	err := xorm.In("id", hid).Find(&hms)
+	if err != nil {
+		return nil, err
+	}
+	return hms, nil
+}

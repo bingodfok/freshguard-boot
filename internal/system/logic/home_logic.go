@@ -25,3 +25,29 @@ func GenHomeByUserLogic(ctx *ctx.AppContext, user *dao.User) (*dao.Home, error) 
 	}
 	return home, nil
 }
+
+// GetHomeByUserId 获取用户当前所在家庭
+func GetHomeByUserId(ctx *ctx.AppContext, userId int64) (*dao.Home, error) {
+	homeMembers, err := dao.GenHomeMemberByUserId(ctx.Xorm, userId)
+	if err != nil {
+		return nil, err
+	}
+	var homeIds []int64
+	for _, member := range homeMembers {
+		homeIds = append(homeIds, member.HomeId)
+	}
+	homes, err := dao.ListByHomeIds(ctx.Xorm, homeIds)
+	if err != nil {
+		return nil, err
+	}
+	if len(homes) == 1 {
+		return homes[0], nil
+	} else {
+		for _, home := range homes {
+			if home.Belong != userId {
+				return home, nil
+			}
+		}
+	}
+	return nil, nil
+}

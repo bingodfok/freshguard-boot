@@ -22,3 +22,12 @@ func (hm *HomeMember) Insert(xorm *xorm.Engine) error {
 	}
 	return nil
 }
+
+func GenHomeMemberByUserId(xorm *xorm.Engine, userId int64) ([]*HomeMember, error) {
+	hms := make([]*HomeMember, 0)
+	err := xorm.Where("user_id=?", userId).Find(&hms)
+	if err != nil {
+		return nil, err
+	}
+	return hms, nil
+}
