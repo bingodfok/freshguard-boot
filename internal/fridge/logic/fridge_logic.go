@@ -60,6 +60,7 @@ func FridgeEditLogic(ctx *ctx.AppContext, edit *dto.EditFridgeReq, userId int64)
 	if fridged.CreateBy != userId && home.Belong != userId {
 		return errors.NewBizErrorCode(resp.NewResultCode(resp.UnauthorizedCode.Code, "没有编辑权限"))
 	}
+	fridged.Name = edit.Name
 	if err := dao.UpdateFridge(ctx.Xorm, fridged); err != nil {
 		return err
 	}
