@@ -22,7 +22,7 @@ func CategoryListHandler(ctx *ctx.AppContext) func(f *fiber.Ctx) error {
 		if err != nil {
 			return err
 		}
-		var resps []dto.CategoryRsp
+		resps := make([]dto.CategoryRsp, 0)
 		for _, category := range categories {
 			if category.Type == 1 { // 系统内置
 				resps = append(resps, dto.CategoryRsp{

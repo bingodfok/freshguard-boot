@@ -41,7 +41,7 @@ func FridgeListHandler(ctx *ctx.AppContext) func(*fiber.Ctx) error {
 		if err != nil {
 			return err
 		}
-		var fridgeReps []dto.FridgeRep
+		fridgeReps := make([]dto.FridgeRep, 0)
 		for _, fridge := range fridges {
 			createBy, err := syslogic.GetUserByIdLogic(ctx, fridge.CreateBy)
 			if err != nil {
