@@ -7,6 +7,7 @@ import (
 	bizErrors "github.com/bingodfok/freshguard-boot/pkg/model/errors"
 	"github.com/bingodfok/freshguard-boot/pkg/model/resp"
 	"github.com/gofiber/fiber/v2"
+	"log"
 	"strconv"
 )
 
@@ -27,6 +28,7 @@ func (server *FiberServer) InitFiberServer() {
 		CaseSensitive:     true, // 区分请求地址大小写
 		EnablePrintRoutes: true,
 		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
+			log.Println(err)
 			var biz *bizErrors.BizError
 			if errors.As(err, &biz) {
 				return ctx.JSON(resp.EmptyDataResult(resp.NewResultCode(biz.Code, biz.Msg)))

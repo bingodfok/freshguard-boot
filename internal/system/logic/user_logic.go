@@ -10,6 +10,14 @@ func GetUserByPhoneLogic(ctx *ctx.AppContext, phone string) (*dao.User, error) {
 	return dao.SelectByPhone(ctx.Xorm, phone)
 }
 
+func GetUserByIdLogic(ctx *ctx.AppContext, id int64) (*dao.User, error) {
+	user, err := dao.SelectById(ctx.Xorm, id)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
 func GenUserByPhoneLogic(ctx *ctx.AppContext, phone string) (*dao.User, error) {
 	userId, err := GenUserIdLogic(ctx)
 	if err != nil {

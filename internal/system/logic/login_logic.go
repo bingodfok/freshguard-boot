@@ -43,7 +43,7 @@ func PhoneCaptchaLoginLogic(ctx *ctx.AppContext, codeKey string, code string, ph
 				return nil, err
 			}
 		}
-		home, err := GetHomeByUserId(ctx, user.Id)
+		home, err := GetHomeByUser(ctx, user.Id)
 		jwtAuth := auth.JwtAuth{
 			SigningKey: ctx.Viper.GetString("jwt.secret"),
 		}

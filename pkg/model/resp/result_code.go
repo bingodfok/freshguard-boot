@@ -9,6 +9,7 @@ var (
 	// 特殊响应状态码
 	CaptchaErrorCode = NewResultCode(1001, "验证码错误")
 	CaptchaExpCode   = NewResultCode(1002, "验证码过期")
+	UserNotExistCode = NewResultCode(1003, "用户不存在")
 )
 
 type ResultCode struct {

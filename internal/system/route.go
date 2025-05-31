@@ -6,14 +6,11 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-var (
-	getProfileHandler = handler.GetProfileHandler
-)
-
 func Route(ctx *ctx.AppContext) func(router fiber.Router) {
 	return func(router fiber.Router) {
-		router.Get("/profile", getProfileHandler)
+		router.Get("/user/profile", handler.GetUserProfileHandler(ctx))
 		router.Get("/resource/sms_captcha", handler.SmsCodeHandler(ctx))
 		router.Post("/login/sms_captcha", handler.PhoneCaptchaLoginHandler(ctx))
+		router.Get("/home/detail", handler.GetHomeDetailHandler(ctx))
 	}
 }
