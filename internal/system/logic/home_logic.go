@@ -28,7 +28,7 @@ func GenHomeByUserLogic(ctx *ctx.AppContext, user *dao.User) (*dao.Home, error) 
 
 // GetHomeByUser 获取用户当前所在家庭
 func GetHomeByUser(ctx *ctx.AppContext, id int64) (*dao.Home, error) {
-	homeMembers, err := dao.GenHomeMemberByUser(ctx.Xorm, id)
+	homeMembers, err := dao.GetHomeMemberByUser(ctx.Xorm, id)
 	if err != nil {
 		return nil, err
 	}
