@@ -29,7 +29,7 @@ func (sql *XormSql) InitXorm() *xorm.Engine {
 	if err != nil {
 		panic(err)
 	}
-	engine.DatabaseTZ = time.UTC
+	engine.DatabaseTZ = time.Local
 	engine.TZLocation = time.Local
 	engine.SetMaxIdleConns(10)
 	engine.SetMaxOpenConns(100)

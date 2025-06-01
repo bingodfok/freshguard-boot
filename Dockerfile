@@ -22,6 +22,9 @@ WORKDIR /app
 COPY --from=builder /builds/app .
 COPY --from=builder /builds/cmd/etc ./cmd/etc
 
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 RUN apk add dumb-init
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
