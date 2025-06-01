@@ -17,7 +17,7 @@ type XormSql struct {
 }
 
 func (sql *XormSql) InitXorm() *xorm.Engine {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local&serverTimezone=Asia/Shanghai",
 		sql.Username,
 		sql.Password,
 		sql.Host,
