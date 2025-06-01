@@ -41,7 +41,7 @@ func GetFridgeByHomeAndName(xorm *xorm.Engine, homeId int64, name string) (*Frid
 
 func FridgeListByHome(xorm *xorm.Engine, homeId int64) ([]*Fridge, error) {
 	friends := make([]*Fridge, 0)
-	if err := xorm.Where("home_id = ?", homeId).Find(&friends); err != nil {
+	if err := xorm.Where("home_id = ?", homeId).Desc("create_at").Find(&friends); err != nil {
 		return nil, err
 	}
 	return friends, nil
