@@ -5,6 +5,7 @@ var (
 	SuccessCode      = NewResultCode(200, "Success")
 	BadRequestCode   = NewResultCode(400, "Bad Request")
 	UnauthorizedCode = NewResultCode(401, "Unauthorized")
+	ForbiddenCode    = NewResultCode(403, "Forbidden")
 	ServerErrorCode  = NewResultCode(500, "Server Error")
 	// 特殊响应状态码
 	CaptchaErrorCode = NewResultCode(1001, "验证码错误")

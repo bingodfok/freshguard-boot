@@ -66,3 +66,11 @@ func UpdateFridge(xorm *xorm.Engine, fridge *Fridge) error {
 	}
 	return nil
 }
+
+func DeleteFridge(xorm *xorm.Engine, id int64) error {
+	_, err := xorm.ID(id).Delete(&Fridge{})
+	if err != nil {
+		return err
+	}
+	return nil
+}

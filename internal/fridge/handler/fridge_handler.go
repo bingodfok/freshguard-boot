@@ -8,6 +8,7 @@ import (
 	"github.com/bingodfok/freshguard-boot/pkg/auth"
 	"github.com/bingodfok/freshguard-boot/pkg/model/resp"
 	"github.com/gofiber/fiber/v2"
+	"strconv"
 )
 
 // CreateFridgeHandler 创建冰箱
@@ -74,6 +75,26 @@ func FridgeEditHandler(ctx *ctx.AppContext) func(*fiber.Ctx) error {
 		}
 		claims := f.Locals("auth_context").(*auth.StandardClaims)
 		err := logic.FridgeEditLogic(ctx, req, claims.Id)
+		if err != nil {
+			return err
+		}
+		return f.JSON(resp.EmptyDataResult(resp.SuccessCode))
+	}
+}
+
+// FridgeDelHandler 删除冰箱
+func FridgeDelHandler(ctx *ctx.AppContext) func(*fiber.Ctx) error {
+	return func(f *fiber.Ctx) error {
+		fridgeIdStr := f.Query("id")
+		if fridgeIdStr == "" {
+			return f.Status(fiber.StatusBadRequest).JSON(resp.CodeMsgResult(resp.BadRequestCode, "ID不能为空"))
+		}
+		fridgeId, err := strconv.ParseInt(fridgeIdStr, 10, 64)
+		if err != nil {
+			return err
+		}
+		claims := f.Locals("auth_context").(*auth.StandardClaims)
+		err = logic.FridgeDelLogic(ctx, fridgeId, claims.Id)
 		if err != nil {
 			return err
 		}

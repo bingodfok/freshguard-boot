@@ -58,10 +58,31 @@ func FridgeEditLogic(ctx *ctx.AppContext, edit *dto.EditFridgeReq, userId int64)
 		return errors.NewBizErrorCode(resp.FridgeNotExistCode)
 	}
 	if fridged.CreateBy != userId && home.Belong != userId {
-		return errors.NewBizErrorCode(resp.NewResultCode(resp.UnauthorizedCode.Code, "没有编辑权限"))
+		return errors.NewBizErrorCode(resp.NewResultCode(resp.ForbiddenCode.Code, "没有编辑权限"))
 	}
 	fridged.Name = edit.Name
 	if err := dao.UpdateFridge(ctx.Xorm, fridged); err != nil {
+		return err
+	}
+	return nil
+}
+
+func FridgeDelLogic(ctx *ctx.AppContext, id int64, userId int64) error {
+	home, err := logic.GetHomeByUser(ctx, userId)
+	if err != nil {
+		return err
+	}
+	fridge, err := dao.SelectFridgeById(ctx.Xorm, id)
+	if err != nil {
+		return err
+	}
+	if fridge == nil {
+		return errors.NewBizErrorCode(resp.FridgeNotExistCode)
+	}
+	if home.Belong != userId && fridge.CreateBy != userId {
+		return errors.NewBizErrorCode(resp.NewResultCode(resp.ForbiddenCode.Code, "没有删除权限"))
+	}
+	if err := dao.DeleteFridge(ctx.Xorm, id); err != nil {
 		return err
 	}
 	return nil
