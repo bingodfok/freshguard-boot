@@ -3,6 +3,7 @@ package mysql
 import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"time"
 	"xorm.io/xorm"
 )
 
@@ -17,7 +18,7 @@ type XormSql struct {
 }
 
 func (sql *XormSql) InitXorm() *xorm.Engine {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local&serverTimezone=Asia/Shanghai",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		sql.Username,
 		sql.Password,
 		sql.Host,
@@ -28,6 +29,8 @@ func (sql *XormSql) InitXorm() *xorm.Engine {
 	if err != nil {
 		panic(err)
 	}
+	engine.DatabaseTZ = time.UTC
+	engine.TZLocation = time.Local
 	engine.SetMaxIdleConns(10)
 	engine.SetMaxOpenConns(100)
 	engine.ShowSQL(true)
