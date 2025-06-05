@@ -11,7 +11,7 @@ import (
 
 // SendSmsCodeLogic 发送短信验证码
 func SendSmsCodeLogic(phone string, ctx *ctx.AppContext) (string, error) {
-	code, err := utils.GenNumberString(6)
+	code, err := utils.GenNumberString(4)
 	if err != nil {
 		return "", err
 	}
